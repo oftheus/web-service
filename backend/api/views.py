@@ -8,35 +8,41 @@ def getRoutes(request):
 
     routes = [
         {
-            'Endpoint': '/tarefas/',
+            'Endpoint': 'tasks/',
             'method': 'GET',
             'body': None,
             'description': 'Returns an array of notes'
         },
         {
-            'Endpoint': '/tarefas/id',
+            'Endpoint': '/tasks/id',
             'method': 'GET',
             'body': None,
             'description': 'Returns a single note object'
         },
         {
-            'Endpoint': '/tarefas/create/',
+            'Endpoint': '/tasks/create/',
             'method': 'POST',
             'body': {'body': ""},
             'description': 'Creates new note with data sent in post request'
         },
         {
-            'Endpoint': '/tarefas/id/update/',
+            'Endpoint': '/tasks/id/update/',
             'method': 'PUT',
             'body': {'body': ""},
             'description': 'Creates an existing note with data sent in post request'
         },
         {
-            'Endpoint': '/tarefas/id/delete/',
+            'Endpoint': '/tasks/id/delete/',
             'method': 'DELETE',
             'body': None,
             'description': 'Deletes and exiting note'
         },
+        {
+            'Endpoint': '/tasks/id/complete/',
+            'method': 'PUT',
+            'body': None,
+            'description': 'Completa uma tarefa'
+        }
     ]
     return Response(routes)
 
@@ -75,3 +81,12 @@ def deletarTarefa(request, pk):
     tarefa = Tarefa.objects.get(id=pk)
     tarefa.delete()
     return Response('Tarefa foi apagada!')
+
+@api_view(['PUT'])
+def marcarConcluida(request, pk):
+    tarefa = Tarefa.objects.get(id=pk)
+    tarefa.isComplete = True
+    serializer = TarefaSerializer(tarefa, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)

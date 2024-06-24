@@ -3,9 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.getRoutes),
-    path('tarefas/', views.getTarefas),
-    path('tarefas/create/', views.criarTarefa),
-    path('tarefas/<str:pk>/update/', views.atualizarTarefa),
-    path('tarefas/<str:pk>/delete/', views.deletarTarefa),
-    path('tarefas/<str:pk>/', views.getTarefa),
+    path('tasks/', views.getTarefas),
+    path('tasks/create/', views.criarTarefa),
+    path('tasks/<str:pk>/update/', views.atualizarTarefa),
+    path('tasks/<str:pk>/complete/', views.marcarConcluida),
+    path('tasks/<str:pk>/delete/', views.deletarTarefa),
+    path('tasks/<str:pk>/', views.getTarefa),
 ]
